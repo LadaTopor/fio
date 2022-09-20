@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dDate = new System.Windows.Forms.DateTimePicker();
             this.tbFIO = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -117,6 +118,9 @@
             // FIO
             // 
             this.FIO.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle1.Format = "d";
+            dataGridViewCellStyle1.NullValue = null;
+            this.FIO.DefaultCellStyle = dataGridViewCellStyle1;
             this.FIO.HeaderText = "ФИО";
             this.FIO.Name = "FIO";
             this.FIO.ReadOnly = true;

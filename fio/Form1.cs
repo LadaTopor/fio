@@ -12,9 +12,37 @@ namespace fio
 {
     public partial class Form1 : Form
     {
+        List<Person> mas = new List<Person>();
+        struct Person
+        {
+            public string FIO;
+            public Date Birthday;
+
+            public Person(string fio, Date birthday)
+            {
+                FIO = fio;
+                Birthday = birthday;
+            }
+            
+        }
+
+        struct Date
+        {
+            public int year;
+            public int month;
+            public int day;
+            
+            public Date(DateTime value)
+            {
+                year = value.Year;
+                month = value.Month;
+                day = value.Day;
+            }
+        }
+
         public Form1()
         {
-            InitializeComponent();
+            InitializeComponent();           
         }
 
         private void bClear_Click(object sender, EventArgs e)
@@ -25,22 +53,51 @@ namespace fio
 
         private void bAdd_Click(object sender, EventArgs e)
         {
-            dgTable.Rows.Add(tbFIO.Text, dDate.Value);
+            Date date_temp = new Date(dDate.Value);
+            Person temp = new Person(tbFIO.Text, date_temp);
+            mas.Add(temp);
+            dgTable.Rows.Add(temp.FIO, temp.Birthday);
         }
 
         private void bFind_Click(object sender, EventArgs e)
         {
-            DateTime min = DateTime.Now;
-            int select = 0;
-            for (int i = 0; i < dgTable.RowCount; i++)
+            int min_year = 9999;
+            int min_month = 13;
+            int min_day = 31;
+            int answer = 0;
+            for (int i = 0; i < mas.Count; i++)
             {
-                if (min.CompareTo(Convert.ToDateTime(dgTable[1, i].Value)) > 0)
+                Date temp = mas[i].Birthday;
+                if (min_year > temp.year)
                 {
-                    min = Convert.ToDateTime(dgTable[1, i].Value);
-                    select = i;
-                };
+                    answer = i;
+                    min_year = temp.year;
+                }
+                else if (min_year == temp.year)
+                {
+                    if (min_month > temp.month)
+                    {
+                        answer = i;
+                        min_month = temp.month;
+                    }
+                    else if (min_month == temp.month)
+                    {
+                        if (min_day > temp.day)
+                        {
+                            answer = i;
+                            min_day = temp.day;
+                        }
+                        else if (min_day == temp.day)
+                        {
+
+                        }
+                        else continue;
+                    }
+                    else continue;
+                }
+                else continue;
             }
-            dgTable[0, select - 1].Selected = true;
+            MessageBox.Show(dgTable[1, answer].ToString());
         }
     }
 }
